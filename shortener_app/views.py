@@ -1,4 +1,8 @@
-from django.shortcuts import render
+import random, string
+
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render, reverse, redirect,get_object_or_404
+from .models import UrlShortener
 """
 Need to create three views. 
 
@@ -10,11 +14,18 @@ a third view that performs the redirecting, don't use HttpResponse
 
 
 """
-# Create your views here.
-
+#This view shows us the index page and a list of urls we have already entered
 def urlItems(request):
-    allUrlItems = ToDoItem.objects.all()
-    context = {'allurlItems': allUrlItems}
+    allUrlItems = UrlShortener.objects.all()
+    context = {'allUrlItems': allUrlItems}
     return render(request, 'shortener_app/index.html', context)
 
+#This view takes the POST url, generates a random string, and saves it to the database
+def newUrl(request):
+    storedURL = request.POST['storedURL']
+    standInUrl = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    context = UrlShortener.objects.create(storedURL = storedURL, standInUrl = standInUrl)
+    context.save()
+    return redirect('http://127.0.0.1:8000')
 
+#This view performs the redirecting. Do not use HttpResponse

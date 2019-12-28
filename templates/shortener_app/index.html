@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Hello from index</h1>
+<h1>ShortRl</h1>
+<h2>A Helpful Url Shortener for Websites and IM</h2><br>
+
+<form action="{% url 'shortener_app:newUrl'%} " method="post">
+    {% csrf_token%}
+<input type="text" name="storedURL" id="storedURL"><br>
+<input type="submit" name="submit" id="submit" value="Submit"><br><br>
+</form>
+
+{% for item in allUrlItems %}
+<div>
+    <li>{{ item }}</li>
+</div>
+{% endfor %}
 {% endblock %}
+
+
+

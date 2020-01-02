@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class UrlShortener(models.Model):
-    storedURL = models.CharField(max_length = 250)
+    storedURL = models.URLField(max_length = 250)
     # the standInUrl holds the randomly generated id that links to the storedURL
     standInUrl = models.CharField(max_length = 20)
     dateCreated = models.DateField(auto_now_add=True)
@@ -12,4 +12,4 @@ class UrlShortener(models.Model):
 
 
     def __str__(self):
-        return self.storedURL
+        return self.standInUrl

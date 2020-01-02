@@ -1,7 +1,7 @@
 import random, string
 
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render, reverse, redirect,get_object_or_404
+from django.shortcuts import render, reverse, redirect, get_object_or_404
 from .models import UrlShortener
 """
 Need to create three views. 
@@ -29,3 +29,15 @@ def newUrl(request):
     return redirect('http://127.0.0.1:8000')
 
 #This view performs the redirecting. Do not use HttpResponse
+# how do I get the stored url from filtering the database to include only the item with the id
+# def redirectUrl(request, UrlShortener_id):
+#     return redirect(UrlShortener.objects.filter(standInUrl=UrlShortener_id).values('storedURL'))
+
+
+# def redirectUrl(request, UrlShortener_id):
+#     finalPath = UrlShortener.objects.values_list('storedURL', flat=True).get(standInUrl=UrlShortener_id)
+#     return redirect(finalPath.url)
+
+def redirectUrl(request, UrlShortener_id):
+    externalUrl = UrlShortener.objects.get(standInUrl=UrlShortener_id)
+    return redirect(externalUrl.url)

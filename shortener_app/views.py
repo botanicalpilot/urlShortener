@@ -36,8 +36,9 @@ def newUrl(request):
 
 # def redirectUrl(request, UrlShortener_id):
 #     finalPath = UrlShortener.objects.values_list('storedURL', flat=True).get(standInUrl=UrlShortener_id)
-#     return redirect(finalPath.url)
+#     return redirect(finalPath)
 
-def redirectUrl(request, UrlShortener_id):
-    externalUrl = UrlShortener.objects.get(standInUrl=UrlShortener_id)
-    return redirect(externalUrl.url)
+def redirectUrl(request, standInUrl):
+    url = UrlShortener.objects.get(standInUrl=standInUrl)
+    print(url.storedURL)
+    return redirect(url.storedURL)
